@@ -55,9 +55,16 @@ namespace RefactoringKata
 
         private void AppendContentFor(Order order)
         {
+
             _stringBuilder.Append("{");
-            _stringBuilder.Append("\"id\": ");
-            _stringBuilder.Append(order.GetOrderId());
+
+            var content = new Dictionary<string, string>()
+            {
+                {"id", order.GetOrderId().ToString()}
+            };
+
+            var orderContent = string.Join(", ", content.Select(TransformToJsonProperty));
+            _stringBuilder.Append(orderContent);
             _stringBuilder.Append(", ");
             _stringBuilder.Append("\"products\": [");
 
@@ -101,7 +108,7 @@ namespace RefactoringKata
                 item.Value));
         }
 
-        private static string jsonEncode(string value)
+        private static string jsonEncode(dynamic value)
         {
             double output;
             if (double.TryParse(value, out output))
