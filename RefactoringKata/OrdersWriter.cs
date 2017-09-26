@@ -34,7 +34,9 @@ namespace RefactoringKata
                 _stringBuilder.Remove(_stringBuilder.Length - 2, 2);
             }
 
-            var contents = _stringBuilder.Append("]}").ToString();
+            _stringBuilder.Append("]}");
+
+            var contents = _stringBuilder.ToString();
             return contents;
         }
 
