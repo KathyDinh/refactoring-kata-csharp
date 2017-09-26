@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace RefactoringKata
@@ -94,17 +95,18 @@ namespace RefactoringKata
 
             content.Add("price", product.Price.ToString(CultureInfo.InvariantCulture));
             content.Add("currency", product.Currency);
-            var firstItem = true;
-            foreach (var item in content)
-            {
-                if (!firstItem)
-                {
-                    _stringBuilder.Append(", ");
-                }
-                firstItem = false;
-                _stringBuilder.AppendFormat("{0}: {1}", jsonEncode(item.Key), jsonEncode(item.Value));
-            }
+
+            var productContent = string.Join(", ", content.Select(
+                TransformToJsonProperty));
+
+            _stringBuilder.Append(productContent);
             _stringBuilder.Append("}, ");
+        }
+
+        private static string TransformToJsonProperty(KeyValuePair<string, string> item)
+        {
+            return string.Format("{0}: {1}", jsonEncode(item.Key), jsonEncode(
+                item.Value));
         }
 
         private static string jsonEncode(string value)
