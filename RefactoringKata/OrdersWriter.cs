@@ -14,7 +14,7 @@ namespace RefactoringKata
 
         public string GetContents()
         {
-            _stringBuilder = new StringBuilder("{\"orders\": [");
+            InitializeOrderContent();
 
             for (var i = 0; i < _orders.GetOrdersCount(); i++)
             {
@@ -28,6 +28,11 @@ namespace RefactoringKata
             }
 
             return _stringBuilder.Append("]}").ToString();
+        }
+
+        private void InitializeOrderContent()
+        {
+            _stringBuilder = new StringBuilder("{\"orders\": [");
         }
 
         private void AppendContentFor(Order order)
