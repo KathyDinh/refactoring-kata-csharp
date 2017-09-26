@@ -29,11 +29,16 @@ namespace RefactoringKata
 
         private string AppendOrderContents()
         {
+            var orderContents = new List<string>();
             for (var i = 0; i < _orders.GetOrdersCount(); i++)
             {
                 var order = _orders.GetOrder(i);
-                AppendContentFor(order);
+                orderContents.Add(GetContentFor(order));
             }
+
+            var content = string.Join(", ", orderContents);
+
+            _stringBuilder.Append(content);
 
             EndOrderContents();
 
@@ -42,11 +47,6 @@ namespace RefactoringKata
 
         private void EndOrderContents()
         {
-            if (_orders.GetOrdersCount() > 0)
-            {
-                _stringBuilder.Remove(_stringBuilder.Length - 2, 2);
-            }
-
             _stringBuilder.Append("]}");
         }
 
@@ -55,22 +55,17 @@ namespace RefactoringKata
             _stringBuilder = new StringBuilder("{\"orders\": [");
         }
 
-        private void AppendContentFor(Order order)
+        private string GetContentFor(Order order)
         {
-
-            _stringBuilder.Append("{");
-
             var content = new Dictionary<string, string>()
             {
                 {"id", order.GetOrderId().ToString()}
                 , {"products", GetProductContentsFor(order)}
             };
 
-            var json = string.Join(", ", content.Select(TransformToJsonProperty));
+            var orderContent = TransformToAJsonObject(content);
 
-            _stringBuilder.Append(json);
-
-            _stringBuilder.Append("}, ");
+            return orderContent;
         }
 
         private string GetProductContentsFor(Order order)
