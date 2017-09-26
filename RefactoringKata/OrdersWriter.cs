@@ -27,7 +27,9 @@ namespace RefactoringKata
                 _stringBuilder.Remove(_stringBuilder.Length - 2, 2);
             }
 
-            return _stringBuilder.Append("]}").ToString();
+            var contents = _stringBuilder.Append("]}").ToString();
+
+            return contents;
         }
 
         private void InitializeOrderContent()
