@@ -19,21 +19,7 @@ namespace RefactoringKata
             for (var i = 0; i < _orders.GetOrdersCount(); i++)
             {
                 var order = _orders.GetOrder(i);
-                _stringBuilder.Append("{");
-                _stringBuilder.Append("\"id\": ");
-                _stringBuilder.Append(order.GetOrderId());
-                _stringBuilder.Append(", ");
-                _stringBuilder.Append("\"products\": [");
-
-                GetProductContentFor(order);
-
-                if (order.GetProductsCount() > 0)
-                {
-                    _stringBuilder.Remove(_stringBuilder.Length - 2, 2);
-                }
-
-                _stringBuilder.Append("]");
-                _stringBuilder.Append("}, ");
+                AppendContentFor(order);
             }
 
             if (_orders.GetOrdersCount() > 0)
@@ -44,7 +30,26 @@ namespace RefactoringKata
             return _stringBuilder.Append("]}").ToString();
         }
 
-        private void GetProductContentFor(Order order)
+        private void AppendContentFor(Order order)
+        {
+            _stringBuilder.Append("{");
+            _stringBuilder.Append("\"id\": ");
+            _stringBuilder.Append(order.GetOrderId());
+            _stringBuilder.Append(", ");
+            _stringBuilder.Append("\"products\": [");
+
+            AppendProductContentsFor(order);
+
+            if (order.GetProductsCount() > 0)
+            {
+                _stringBuilder.Remove(_stringBuilder.Length - 2, 2);
+            }
+
+            _stringBuilder.Append("]");
+            _stringBuilder.Append("}, ");
+        }
+
+        private void AppendProductContentsFor(Order order)
         {
             for (var j = 0; j < order.GetProductsCount(); j++)
             {
