@@ -83,15 +83,13 @@ namespace RefactoringKata
         private void AppendContentFor(Product product)
         {
             var builder = new StringBuilder();
-            builder.Append("{");
 
             var content = product.GetContent();
 
             var productContent = string.Join(", ", content.Select(
                 TransformToJsonProperty));
 
-            builder.Append(productContent);
-            builder.Append("}, ");
+            builder.AppendFormat("{{{0}}}, ", productContent);
 
             _stringBuilder.Append(builder);
         }
