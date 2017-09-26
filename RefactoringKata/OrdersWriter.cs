@@ -32,7 +32,7 @@ namespace RefactoringKata
                     sb.Append(product.Code);
                     sb.Append("\", ");
                     sb.Append("\"color\": \"");
-                    sb.Append(getColorFor(product));
+                    sb.Append(product.getColor());
                     sb.Append("\", ");
 
                     if (product.Size != Product.SIZE_NOT_APPLICABLE)
@@ -65,22 +65,6 @@ namespace RefactoringKata
             }
 
             return sb.Append("]}").ToString();
-        }
-
-
-        private string getColorFor(Product product)
-        {
-            switch (product.Color)
-            {
-                case 1:
-                    return "blue";
-                case 2:
-                    return "red";
-                case 3:
-                    return "yellow";
-                default:
-                    return "no color";
-            }
         }
     }
 }
