@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace RefactoringKata
@@ -91,23 +92,27 @@ namespace RefactoringKata
                 content.Add("size", product.getSize());
             }
 
+            content.Add("price", product.Price.ToString(CultureInfo.InvariantCulture));
+
             foreach (var item in content)
             {
-                _stringBuilder.AppendFormat("{0}: {1}", doubleQuote(item.Key), doubleQuote(item.Value));
+                _stringBuilder.AppendFormat("{0}: {1}", jsonEncode(item.Key), jsonEncode(item.Value));
                 _stringBuilder.Append(", ");
             }
 
-            _stringBuilder.Append("\"price\": ");
-            _stringBuilder.Append(product.Price);
-            _stringBuilder.Append(", ");
             _stringBuilder.Append("\"currency\": \"");
             _stringBuilder.Append(product.Currency);
             _stringBuilder.Append("\"}, ");
         }
 
-        private static string doubleQuote(string aString)
+        private static string jsonEncode(string value)
         {
-            return string.Format("\"{0}\"", aString);
+            double output;
+            if (double.TryParse(value, out output))
+            {
+                return value;
+            }
+            return string.Format("\"{0}\"", value);
         }
     }
 }
