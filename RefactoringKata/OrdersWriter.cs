@@ -82,13 +82,6 @@ namespace RefactoringKata
         }
         private void AppendContentFor(Product product)
         {
-            var builder = BuildContentFor(product);
-
-            _stringBuilder.Append(builder);
-        }
-
-        private static StringBuilder BuildContentFor(Product product)
-        {
             var builder = new StringBuilder();
             builder.Append("{");
 
@@ -99,7 +92,8 @@ namespace RefactoringKata
 
             builder.Append(productContent);
             builder.Append("}, ");
-            return builder;
+
+            _stringBuilder.Append(builder);
         }
 
         private static string TransformToJsonProperty(KeyValuePair<string, string> item)
