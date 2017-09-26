@@ -14,7 +14,7 @@ namespace RefactoringKata
 
         public string GetContents()
         {
-            InitializeOrderContent();
+            InitializeOrderContents();
 
             var contents = AppendOrderContents();
 
@@ -29,18 +29,22 @@ namespace RefactoringKata
                 AppendContentFor(order);
             }
 
+            EndOrderContents();
+
+            return _stringBuilder.ToString();
+        }
+
+        private void EndOrderContents()
+        {
             if (_orders.GetOrdersCount() > 0)
             {
                 _stringBuilder.Remove(_stringBuilder.Length - 2, 2);
             }
 
             _stringBuilder.Append("]}");
-
-            var contents = _stringBuilder.ToString();
-            return contents;
         }
 
-        private void InitializeOrderContent()
+        private void InitializeOrderContents()
         {
             _stringBuilder = new StringBuilder("{\"orders\": [");
         }
