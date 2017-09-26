@@ -16,6 +16,13 @@ namespace RefactoringKata
         {
             InitializeOrderContent();
 
+            var contents = AppendOrderContents();
+
+            return contents;
+        }
+
+        private string AppendOrderContents()
+        {
             for (var i = 0; i < _orders.GetOrdersCount(); i++)
             {
                 var order = _orders.GetOrder(i);
@@ -28,7 +35,6 @@ namespace RefactoringKata
             }
 
             var contents = _stringBuilder.Append("]}").ToString();
-
             return contents;
         }
 
