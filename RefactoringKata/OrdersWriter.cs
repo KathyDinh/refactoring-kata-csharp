@@ -63,24 +63,23 @@ namespace RefactoringKata
 
             AppendProductContentsFor(order);
 
-            if (order.GetProductsCount() > 0)
-            {
-                _stringBuilder.Remove(_stringBuilder.Length - 2, 2);
-            }
-
             _stringBuilder.Append("]");
             _stringBuilder.Append("}, ");
         }
 
         private void AppendProductContentsFor(Order order)
         {
+            var productContents = new List<StringBuilder>();
             for (var j = 0; j < order.GetProductsCount(); j++)
             {
                 var product = order.GetProduct(j);
-                AppendContentFor(product);
+                productContents.Add(GetContentFor(product));
             }
+
+            var content = string.Join(", ", productContents);
+            _stringBuilder.Append(content);
         }
-        private void AppendContentFor(Product product)
+        private StringBuilder GetContentFor(Product product)
         {
             var builder = new StringBuilder();
 
@@ -89,9 +88,9 @@ namespace RefactoringKata
             var productContent = string.Join(", ", content.Select(
                 TransformToJsonProperty));
 
-            builder.AppendFormat("{{{0}}}, ", productContent);
+            builder.AppendFormat("{{{0}}}", productContent);
 
-            _stringBuilder.Append(builder);
+            return builder;
         }
 
         private static string TransformToJsonProperty(KeyValuePair<string, string> item)
