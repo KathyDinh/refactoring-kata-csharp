@@ -82,23 +82,19 @@ namespace RefactoringKata
         {
             _stringBuilder.Append("{");
 
-            var content = new Dictionary<string, string>
-            {
-                {"code", product.Code}
-                ,{"color", product.getColor()}
-            };
-
-            foreach(var item in content)
-            {
-                _stringBuilder.AppendFormat("{0}: {1}", doubleQuote(item.Key), doubleQuote(item.Value));
-                _stringBuilder.Append(", ");
-            }
+            var content = new Dictionary<string, string>();
+            content.Add("code", product.Code);
+            content.Add("color", product.getColor());
 
             if (product.Size != Product.SIZE_NOT_APPLICABLE)
             {
-                _stringBuilder.Append("\"size\": \"");
-                _stringBuilder.Append(product.getSize());
-                _stringBuilder.Append("\", ");
+                content.Add("size", product.getSize());
+            }
+
+            foreach (var item in content)
+            {
+                _stringBuilder.AppendFormat("{0}: {1}", doubleQuote(item.Key), doubleQuote(item.Value));
+                _stringBuilder.Append(", ");
             }
 
             _stringBuilder.Append("\"price\": ");
