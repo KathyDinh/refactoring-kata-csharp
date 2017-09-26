@@ -85,6 +85,7 @@ namespace RefactoringKata
             var content = new Dictionary<string, string>
             {
                 {"code", product.Code}
+                ,{"color", product.getColor()}
             };
 
             foreach(var item in content)
@@ -92,10 +93,6 @@ namespace RefactoringKata
                 _stringBuilder.AppendFormat("{0}: {1}", doubleQuote(item.Key), doubleQuote(item.Value));
                 _stringBuilder.Append(", ");
             }
-
-            _stringBuilder.Append("\"color\": \"");
-            _stringBuilder.Append(product.getColor());
-            _stringBuilder.Append("\", ");
 
             if (product.Size != Product.SIZE_NOT_APPLICABLE)
             {
