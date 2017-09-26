@@ -92,6 +92,18 @@ namespace RefactoringKata
             var builder = new StringBuilder();
             builder.Append("{");
 
+            var content = GetContentFor(product);
+
+            var productContent = string.Join(", ", content.Select(
+                TransformToJsonProperty));
+
+            builder.Append(productContent);
+            builder.Append("}, ");
+            return builder;
+        }
+
+        private static Dictionary<string, string> GetContentFor(Product product)
+        {
             var content = new Dictionary<string, string>();
             content.Add("code", product.Code);
             content.Add("color", product.getColor());
@@ -103,13 +115,7 @@ namespace RefactoringKata
 
             content.Add("price", product.Price.ToString(CultureInfo.InvariantCulture));
             content.Add("currency", product.Currency);
-
-            var productContent = string.Join(", ", content.Select(
-                TransformToJsonProperty));
-
-            builder.Append(productContent);
-            builder.Append("}, ");
-            return builder;
+            return content;
         }
 
         private static string TransformToJsonProperty(KeyValuePair<string, string> item)
