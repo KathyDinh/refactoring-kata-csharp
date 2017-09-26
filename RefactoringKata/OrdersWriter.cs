@@ -93,16 +93,18 @@ namespace RefactoringKata
             }
 
             content.Add("price", product.Price.ToString(CultureInfo.InvariantCulture));
-
+            content.Add("currency", product.Currency);
+            var firstItem = true;
             foreach (var item in content)
             {
+                if (!firstItem)
+                {
+                    _stringBuilder.Append(", ");
+                }
+                firstItem = false;
                 _stringBuilder.AppendFormat("{0}: {1}", jsonEncode(item.Key), jsonEncode(item.Value));
-                _stringBuilder.Append(", ");
             }
-
-            _stringBuilder.Append("\"currency\": \"");
-            _stringBuilder.Append(product.Currency);
-            _stringBuilder.Append("\"}, ");
+            _stringBuilder.Append("}, ");
         }
 
         private static string jsonEncode(string value)
