@@ -1,4 +1,7 @@
-﻿namespace RefactoringKata
+﻿using System.Collections.Generic;
+using System.Globalization;
+
+namespace RefactoringKata
 {
     public class Product
     {
@@ -53,6 +56,22 @@
                 default:
                     return "no color";
             }
+        }
+
+        public Dictionary<string, string> GetContent()
+        {
+            var content = new Dictionary<string, string>();
+            content.Add("code", Code);
+            content.Add("color", getColor());
+
+            if (Size != Product.SIZE_NOT_APPLICABLE)
+            {
+                content.Add("size", getSize());
+            }
+
+            content.Add("price", Price.ToString(CultureInfo.InvariantCulture));
+            content.Add("currency", Currency);
+            return content;
         }
     }
 }
