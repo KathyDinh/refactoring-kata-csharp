@@ -73,28 +73,32 @@ namespace RefactoringKata
             for (var j = 0; j < order.GetProductsCount(); j++)
             {
                 var product = order.GetProduct(j);
-                _stringBuilder.Append("{");
-                _stringBuilder.Append("\"code\": \"");
-                _stringBuilder.Append(product.Code);
-                _stringBuilder.Append("\", ");
-                _stringBuilder.Append("\"color\": \"");
-                _stringBuilder.Append(product.getColor());
-                _stringBuilder.Append("\", ");
-
-                if (product.Size != Product.SIZE_NOT_APPLICABLE)
-                {
-                    _stringBuilder.Append("\"size\": \"");
-                    _stringBuilder.Append(product.getSize());
-                    _stringBuilder.Append("\", ");
-                }
-
-                _stringBuilder.Append("\"price\": ");
-                _stringBuilder.Append(product.Price);
-                _stringBuilder.Append(", ");
-                _stringBuilder.Append("\"currency\": \"");
-                _stringBuilder.Append(product.Currency);
-                _stringBuilder.Append("\"}, ");
+                AppendContentFor(product);
             }
+        }
+        private void AppendContentFor(Product product)
+        {
+            _stringBuilder.Append("{");
+            _stringBuilder.Append("\"code\": \"");
+            _stringBuilder.Append(product.Code);
+            _stringBuilder.Append("\", ");
+            _stringBuilder.Append("\"color\": \"");
+            _stringBuilder.Append(product.getColor());
+            _stringBuilder.Append("\", ");
+
+            if (product.Size != Product.SIZE_NOT_APPLICABLE)
+            {
+                _stringBuilder.Append("\"size\": \"");
+                _stringBuilder.Append(product.getSize());
+                _stringBuilder.Append("\", ");
+            }
+
+            _stringBuilder.Append("\"price\": ");
+            _stringBuilder.Append(product.Price);
+            _stringBuilder.Append(", ");
+            _stringBuilder.Append("\"currency\": \"");
+            _stringBuilder.Append(product.Currency);
+            _stringBuilder.Append("\"}, ");
         }
     }
 }
