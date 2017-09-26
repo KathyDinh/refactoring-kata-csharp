@@ -69,7 +69,7 @@ namespace RefactoringKata
 
         private void AppendProductContentsFor(Order order)
         {
-            var productContents = new List<StringBuilder>();
+            var productContents = new List<string>();
             for (var j = 0; j < order.GetProductsCount(); j++)
             {
                 var product = order.GetProduct(j);
@@ -79,18 +79,20 @@ namespace RefactoringKata
             var content = string.Join(", ", productContents);
             _stringBuilder.Append(content);
         }
-        private StringBuilder GetContentFor(Product product)
+        private string GetContentFor(Product product)
         {
-            var builder = new StringBuilder();
-
             var content = product.GetContent();
 
-            var productContent = string.Join(", ", content.Select(
+            var productContent = TransformToAJsonObject(content);
+
+            return productContent;
+        }
+
+        private static string TransformToAJsonObject(Dictionary<string, string> content)
+        {
+            var jsonProperties = string.Join(", ", content.Select(
                 TransformToJsonProperty));
-
-            builder.AppendFormat("{{{0}}}", productContent);
-
-            return builder;
+            return string.Format("{{{0}}}", jsonProperties);
         }
 
         private static string TransformToJsonProperty(KeyValuePair<string, string> item)
