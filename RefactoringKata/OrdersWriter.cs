@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace RefactoringKata
 {
@@ -79,9 +81,18 @@ namespace RefactoringKata
         private void AppendContentFor(Product product)
         {
             _stringBuilder.Append("{");
-            _stringBuilder.Append("\"code\": \"");
-            _stringBuilder.Append(product.Code);
-            _stringBuilder.Append("\", ");
+
+            var content = new Dictionary<string, string>
+            {
+                {"code", product.Code}
+            };
+
+            foreach(var item in content)
+            {
+                _stringBuilder.AppendFormat("{0}: {1}", doubleQuote(item.Key), doubleQuote(item.Value));
+                _stringBuilder.Append(", ");
+            }
+
             _stringBuilder.Append("\"color\": \"");
             _stringBuilder.Append(product.getColor());
             _stringBuilder.Append("\", ");
@@ -99,6 +110,11 @@ namespace RefactoringKata
             _stringBuilder.Append("\"currency\": \"");
             _stringBuilder.Append(product.Currency);
             _stringBuilder.Append("\"}, ");
+        }
+
+        private static string doubleQuote(string aString)
+        {
+            return string.Format("\"{0}\"", aString);
         }
     }
 }
