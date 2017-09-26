@@ -1,4 +1,6 @@
 ﻿using System;
+using System.CodeDom;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -61,20 +63,17 @@ namespace RefactoringKata
             var content = new Dictionary<string, string>()
             {
                 {"id", order.GetOrderId().ToString()}
+                , {"products", GetProductContentsFor(order)}
             };
 
-            var orderContent = string.Join(", ", content.Select(TransformToJsonProperty));
-            _stringBuilder.Append(orderContent);
-            _stringBuilder.Append(", ");
-            _stringBuilder.Append("\"products\": [");
+            var json = string.Join(", ", content.Select(TransformToJsonProperty));
 
-            AppendProductContentsFor(order);
+            _stringBuilder.Append(json);
 
-            _stringBuilder.Append("]");
             _stringBuilder.Append("}, ");
         }
 
-        private void AppendProductContentsFor(Order order)
+        private string GetProductContentsFor(Order order)
         {
             var productContents = new List<string>();
             for (var j = 0; j < order.GetProductsCount(); j++)
@@ -83,8 +82,8 @@ namespace RefactoringKata
                 productContents.Add(GetContentFor(product));
             }
 
-            var content = string.Join(", ", productContents);
-            _stringBuilder.Append(content);
+            var content = string.Format("[{0}]", string.Join(", ", productContents));
+            return content;
         }
         private string GetContentFor(Product product)
         {
@@ -108,13 +107,19 @@ namespace RefactoringKata
                 item.Value));
         }
 
-        private static string jsonEncode(dynamic value)
+        private static string jsonEncode(string value)
         {
             double output;
             if (double.TryParse(value, out output))
             {
                 return value;
             }
+
+            if (value.StartsWith("["))
+            {
+                return value;
+            }
+
             return string.Format("\"{0}\"", value);
         }
     }

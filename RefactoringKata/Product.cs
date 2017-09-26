@@ -69,7 +69,7 @@ namespace RefactoringKata
                 content.Add("size", getSize());
             }
 
-            content.Add("price", Price.ToString(CultureInfo.InvariantCulture));
+            content.Add("price", Price.ToString());
             content.Add("currency", Currency);
             return content;
         }
