@@ -23,7 +23,7 @@ namespace RefactoringKata
 
         public string GetContents()
         {
-            InitializeOrderContents();
+            Initialize();
 
             var contents = AppendOrderContents();
 
@@ -32,21 +32,21 @@ namespace RefactoringKata
 
         private string AppendOrderContents()
         {
-            var orders = _orders;
-            var orderContents = orders.GetOrderContents();
+            var content = new Dictionary<string, object>
+            {
+                {"orders", _orders.GetOrderContents()}
+            };
 
-            var json = GetJson(orderContents);
+            var json = GetJson(content);
 
             _stringBuilder.Append(json);
-
-            _stringBuilder.Append("]}");
 
             return _stringBuilder.ToString();
         }
 
-        private void InitializeOrderContents()
+        private void Initialize()
         {
-            _stringBuilder = new StringBuilder("{\"orders\": [");
+            _stringBuilder = new StringBuilder();
         }
 
         private static string GetJson(object content)
