@@ -36,7 +36,10 @@ namespace RefactoringKata
             for (var i = 0; i < _orders.GetOrdersCount(); i++)
             {
                 var order = _orders.GetOrder(i);
-                orderContents.Add(GetContentFor(order));
+                var content1 = order.GetContent();
+
+                var orderContent = GetJson(content1);
+                orderContents.Add(orderContent);
             }
 
             var content = string.Join(", ", orderContents);
@@ -56,15 +59,6 @@ namespace RefactoringKata
         private void InitializeOrderContents()
         {
             _stringBuilder = new StringBuilder("{\"orders\": [");
-        }
-
-        private string GetContentFor(Order order)
-        {
-            var content = order.GetContent();
-
-            var orderContent = GetJson(content);
-
-            return orderContent;
         }
 
         private static string GetJson(object content)
