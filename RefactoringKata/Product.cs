@@ -3,26 +3,6 @@ using System.Collections.Generic;
 
 namespace RefactoringKata
 {
-    public enum Color
-    {
-        unknown = 0,
-        blue = 1,
-        red,
-        yellow
-    }
-
-    public enum Size
-    {
-        NotApplicable = -1,
-        Invalid = 0,
-        XS = 1,
-        S,
-        M,
-        L,
-        XL,
-        XXL
-    }
-
     public class Product
     {
         public static int SIZE_NOT_APPLICABLE = -1;
