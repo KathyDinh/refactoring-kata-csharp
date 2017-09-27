@@ -32,9 +32,10 @@ namespace RefactoringKata
 
         private string AppendOrderContents()
         {
+            var orders = _orders;
             var content = new Dictionary<string, object>
             {
-                {"orders", _orders.GetOrderContents()}
+                {"orders", orders.GetOrderContents()}
             };
 
             var json = GetJson(content);
