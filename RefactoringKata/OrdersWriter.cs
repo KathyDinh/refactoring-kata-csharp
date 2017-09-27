@@ -32,14 +32,8 @@ namespace RefactoringKata
 
         private string AppendOrderContents()
         {
-            var orderContents = new List<Dictionary<string,object>>();
-            for (var i = 0; i < _orders.GetOrdersCount(); i++)
-            {
-                var order = _orders.GetOrder(i);
-                var orderContent = order.GetContent();
-
-                orderContents.Add(orderContent);
-            }
+            var orders = _orders;
+            var orderContents = GetOrderContents(orders);
 
             var json = GetJson(orderContents);
 
@@ -48,6 +42,19 @@ namespace RefactoringKata
             _stringBuilder.Append("]}");
 
             return _stringBuilder.ToString();
+        }
+
+        private static List<Dictionary<string, object>> GetOrderContents(Orders orders)
+        {
+            var orderContents = new List<Dictionary<string, object>>();
+            for (var i = 0; i < orders.GetOrdersCount(); i++)
+            {
+                var order = orders.GetOrder(i);
+                var orderContent = order.GetContent();
+
+                orderContents.Add(orderContent);
+            }
+            return orderContents;
         }
 
         private void InitializeOrderContents()
