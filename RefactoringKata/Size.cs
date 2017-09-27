@@ -1,5 +1,9 @@
-﻿namespace RefactoringKata
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace RefactoringKata
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum Size
     {
         NotApplicable = -1,

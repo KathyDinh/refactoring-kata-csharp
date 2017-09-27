@@ -5,8 +5,6 @@ namespace RefactoringKata
 {
     public class Product
     {
-        public static int SIZE_NOT_APPLICABLE = -1;
-
         public string code { get; set; }
         public Color color { get; set; }
         public Size size { get; set; }
@@ -24,7 +22,7 @@ namespace RefactoringKata
 
         public string GetSize()
         {
-            if ((int)size <= 0)
+            if (size <= 0)
             {
                 return "Invalid Size";
             }
@@ -33,16 +31,16 @@ namespace RefactoringKata
 
         public string GetColor()
         {
-            if ((int)color <= 0)
+            if (color <= 0)
             {
                 return "no color";
             }
             return color.ToString();
         }
 
-        public Boolean ShoudlSerializesize
+        public bool ShouldSerializesize()
         {
-            get { return (int)size != SIZE_NOT_APPLICABLE; }
+            return size != Size.NotApplicable;
         }
 
         public Dictionary<string, object> GetContent()
@@ -51,7 +49,7 @@ namespace RefactoringKata
             content.Add("code", code);
             content.Add("color", GetColor());
 
-            if ((int)size != SIZE_NOT_APPLICABLE)
+            if (ShouldSerializesize())
             {
                 content.Add("size", GetSize());
             }
