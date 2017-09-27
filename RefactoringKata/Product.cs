@@ -1,75 +1,83 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RefactoringKata
 {
+    public enum Color
+    {
+        unknown = 0,
+        blue = 1,
+        red,
+        yellow
+    }
+
+    public enum Size
+    {
+        NotApplicable = -1,
+        Invalid = 0,
+        XS = 1,
+        S,
+        M,
+        L,
+        XL,
+        XXL
+    }
+
     public class Product
     {
         public static int SIZE_NOT_APPLICABLE = -1;
 
-        public string Code { get; set; }
-        public int Color { get; set; }
-        public int Size { get; set; }
-        public double Price { get; set; }
-        public string Currency { get; set; }
+        public string code { get; set; }
+        public Color color { get; set; }
+        public Size size { get; set; }
+        public double price { get; set; }
+        public string currency { get; set; }
 
         public Product(string code, int color, int size, double price, string currency)
         {
-            Code = code;
-            Color = color;
-            Size = size;
-            Price = price;
-            Currency = currency;
+            this.code = code;
+            this.color = typeof(Color).IsEnumDefined(color) ? (Color) color : Color.unknown;
+            this.size = typeof(Size).IsEnumDefined(size) ? (Size) size : Size.Invalid;
+            this.price = price;
+            this.currency = currency;
         }
 
         public string GetSize()
         {
-            switch (Size)
+            if ((int)size <= 0)
             {
-                case 1:
-                    return "XS";
-                case 2:
-                    return "S";
-                case 3:
-                    return "M";
-                case 4:
-                    return "L";
-                case 5:
-                    return "XL";
-                case 6:
-                    return "XXL";
-                default:
-                    return "Invalid Size";
+                return "Invalid Size";
             }
+            return size.ToString();
         }
 
         public string GetColor()
         {
-            switch (Color)
+            if ((int)color <= 0)
             {
-                case 1:
-                    return "blue";
-                case 2:
-                    return "red";
-                case 3:
-                    return "yellow";
-                default:
-                    return "no color";
+                return "no color";
             }
+            return color.ToString();
+        }
+
+        public Boolean ShoudlSerializesize
+        {
+            get { return (int)size != SIZE_NOT_APPLICABLE; }
         }
 
         public Dictionary<string, object> GetContent()
         {
             var content = new Dictionary<string, object>();
-            content.Add("code", Code);
+            content.Add("code", code);
             content.Add("color", GetColor());
 
-            if (Size != SIZE_NOT_APPLICABLE)
+            if ((int)size != SIZE_NOT_APPLICABLE)
             {
                 content.Add("size", GetSize());
             }
 
-            content.Add("price", Price);
-            content.Add("currency", Currency);
+            content.Add("price", price);
+            content.Add("currency", currency);
             return content;
         }
     }
