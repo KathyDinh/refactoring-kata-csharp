@@ -60,23 +60,11 @@ namespace RefactoringKata
 
         private string GetContentFor(Order order)
         {
-            var content = GetContent(order);
+            var content = order.GetContent();
 
             var orderContent = GetJson(content);
 
             return orderContent;
-        }
-
-        private static Dictionary<string, dynamic> GetContent(Order order)
-        {
-            var productContents = order.GetProductContents();
-
-            var content = new Dictionary<string, dynamic>()
-            {
-                {"id", order.GetOrderId()},
-                {"products", productContents}
-            };
-            return content;
         }
 
         private static string GetJson(object content)

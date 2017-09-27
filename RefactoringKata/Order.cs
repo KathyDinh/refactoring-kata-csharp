@@ -42,5 +42,15 @@ namespace RefactoringKata
             }
             return productContents;
         }
+
+        public Dictionary<string, object> GetContent()
+        {
+            var content = new Dictionary<string, object>()
+            {
+                {"id", GetOrderId()},
+                {"products", GetProductContents()}
+            };
+            return content;
+        }
     }
 }
