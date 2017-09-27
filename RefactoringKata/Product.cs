@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 
 namespace RefactoringKata
 {
@@ -22,7 +21,7 @@ namespace RefactoringKata
             Currency = currency;
         }
 
-        public string getSize()
+        public string GetSize()
         {
             switch (Size)
             {
@@ -43,9 +42,9 @@ namespace RefactoringKata
             }
         }
 
-        public string getColor()
+        public string GetColor()
         {
-            switch (this.Color)
+            switch (Color)
             {
                 case 1:
                     return "blue";
@@ -58,15 +57,15 @@ namespace RefactoringKata
             }
         }
 
-        public Dictionary<string, dynamic> GetContent()
+        public Dictionary<string, object> GetContent()
         {
-            var content = new Dictionary<string, dynamic>();
+            var content = new Dictionary<string, object>();
             content.Add("code", Code);
-            content.Add("color", getColor());
+            content.Add("color", GetColor());
 
-            if (Size != Product.SIZE_NOT_APPLICABLE)
+            if (Size != SIZE_NOT_APPLICABLE)
             {
-                content.Add("size", getSize());
+                content.Add("size", GetSize());
             }
 
             content.Add("price", Price);
