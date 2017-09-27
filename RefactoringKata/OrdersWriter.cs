@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text;
+using Newtonsoft.Json;
 
 namespace RefactoringKata
 {
@@ -22,10 +23,14 @@ namespace RefactoringKata
 
         private static string GetJson(object content)
         {
-            var jsonDefault = JsonConvert.SerializeObject(content);
-            var json = jsonDefault.Replace(":", ": ")
-                .Replace(",", ", ");
-            return json;
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append(JsonConvert.SerializeObject(content));
+
+            //To comply with test output format
+            stringBuilder.Replace(":", ": ");
+            stringBuilder.Replace(",", ", ");
+           
+            return stringBuilder.ToString();
         }
      
     }
