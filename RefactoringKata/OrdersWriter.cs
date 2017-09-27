@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -14,7 +13,6 @@ namespace RefactoringKata
     public class OrdersWriter
     {
         private readonly Orders _orders;
-        private StringBuilder _stringBuilder;
 
         public OrdersWriter(Orders orders)
         {
@@ -23,27 +21,11 @@ namespace RefactoringKata
 
         public string GetContents()
         {
-            Initialize();
-
-            var contents = AppendOrderContents();
-
-            return contents;
-        }
-
-        private string AppendOrderContents()
-        {
             var content = _orders.GetContent();
 
             var json = GetJson(content);
 
-            _stringBuilder.Append(json);
-
-            return _stringBuilder.ToString();
-        }
-
-        private void Initialize()
-        {
-            _stringBuilder = new StringBuilder();
+            return json;
         }
 
         private static string GetJson(object content)
