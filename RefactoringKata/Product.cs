@@ -20,43 +20,10 @@ namespace RefactoringKata
             this.currency = currency;
         }
 
-        public string GetSize()
-        {
-            if (size <= 0)
-            {
-                return "Invalid Size";
-            }
-            return size.ToString();
-        }
-
-        public string GetColor()
-        {
-            if (color <= 0)
-            {
-                return "no color";
-            }
-            return color.ToString();
-        }
-
         public bool ShouldSerializesize()
         {
             return size != Size.NotApplicable;
         }
 
-        public Dictionary<string, object> GetContent()
-        {
-            var content = new Dictionary<string, object>();
-            content.Add("code", code);
-            content.Add("color", GetColor());
-
-            if (ShouldSerializesize())
-            {
-                content.Add("size", GetSize());
-            }
-
-            content.Add("price", price);
-            content.Add("currency", currency);
-            return content;
-        }
     }
 }

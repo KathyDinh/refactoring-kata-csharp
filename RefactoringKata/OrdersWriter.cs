@@ -14,9 +14,7 @@ namespace RefactoringKata
 
         public string GetContents()
         {
-            var content = _orders.GetContent();
-
-            var json = GetJson(content);
+            var json = GetJson(_orders);
 
             return json;
         }

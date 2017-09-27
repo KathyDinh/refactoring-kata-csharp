@@ -42,25 +42,5 @@ namespace RefactoringKata
             _products.Add(product);
         }
 
-        public List<Dictionary<string, object>> GetProductContents()
-        {
-            var productContents = new List<Dictionary<string, object>>();
-            for (var j = 0; j < GetProductsCount(); j++)
-            {
-                var product = GetProduct(j);
-                productContents.Add(product.GetContent());
-            }
-            return productContents;
-        }
-
-        public Dictionary<string, object> GetContent()
-        {
-            var content = new Dictionary<string, object>()
-            {
-                {"id", GetOrderId()},
-                {"products", GetProductContents()}
-            };
-            return content;
-        }
     }
 }
