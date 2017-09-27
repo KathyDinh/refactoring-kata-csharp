@@ -32,28 +32,22 @@ namespace RefactoringKata
 
         private string AppendOrderContents()
         {
-            var orderContents = new List<string>();
+            var orderContents = new List<Dictionary<string,object>>();
             for (var i = 0; i < _orders.GetOrdersCount(); i++)
             {
                 var order = _orders.GetOrder(i);
-                var content1 = order.GetContent();
+                var orderContent = order.GetContent();
 
-                var orderContent = GetJson(content1);
                 orderContents.Add(orderContent);
             }
 
-            var content = string.Join(", ", orderContents);
+            var json = GetJson(orderContents);
 
-            _stringBuilder.Append(content);
+            _stringBuilder.Append(json);
 
-            EndOrderContents();
+            _stringBuilder.Append("]}");
 
             return _stringBuilder.ToString();
-        }
-
-        private void EndOrderContents()
-        {
-            _stringBuilder.Append("]}");
         }
 
         private void InitializeOrderContents()
