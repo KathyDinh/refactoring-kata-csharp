@@ -62,14 +62,13 @@ namespace RefactoringKata
         {
             var productContents = order.GetProductContents();
 
-            var json = GetJson(productContents);
-            var content = new Dictionary<string, string>()
+            var content = new Dictionary<string, dynamic>()
             {
-                {"id", order.GetOrderId().ToString()}
-                , {"products", json}
+                {"id", order.GetOrderId()}
+                , {"products", productContents}
             };
 
-            var orderContent = TransformToAJsonObject(content);
+            var orderContent = GetJson(content);
 
             return orderContent;
         }
@@ -81,34 +80,6 @@ namespace RefactoringKata
                 .Replace(",", ", ");
             return json;
         }
-
-        private static string TransformToAJsonObject(Dictionary<string, string> content)
-        {
-            var jsonProperties = string.Join(", ", content.Select(
-                TransformToJsonProperty));
-            return string.Format("{{{0}}}", jsonProperties);
-        }
-
-        private static string TransformToJsonProperty(KeyValuePair<string, string> item)
-        {
-            return string.Format("{0}: {1}", jsonEncode(item.Key), jsonEncode(
-                item.Value));
-        }
-
-        private static string jsonEncode(string value)
-        {
-            double output;
-            if (double.TryParse(value, out output))
-            {
-                return value;
-            }
-
-            if (value.StartsWith("["))
-            {
-                return value;
-            }
-
-            return string.Format("\"{0}\"", value);
-        }
+     
     }
 }
