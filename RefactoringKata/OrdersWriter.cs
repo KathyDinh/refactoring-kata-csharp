@@ -33,7 +33,7 @@ namespace RefactoringKata
         private string AppendOrderContents()
         {
             var orders = _orders;
-            var orderContents = Orders.GetOrderContents(orders);
+            var orderContents = orders.GetOrderContents();
 
             var json = GetJson(orderContents);
 

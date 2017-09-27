@@ -21,15 +21,13 @@ namespace RefactoringKata
             return _orders[i];
         }
 
-        public static List<Dictionary<string, object>> GetOrderContents(Orders orders)
+        public List<Dictionary<string, object>> GetOrderContents()
         {
             var orderContents = new List<Dictionary<string, object>>();
-            for (var i = 0; i < orders.GetOrdersCount(); i++)
+            for (var i = 0; i < GetOrdersCount(); i++)
             {
-                var order = orders.GetOrder(i);
-                var orderContent = order.GetContent();
-
-                orderContents.Add(orderContent);
+                var order = GetOrder(i);
+                orderContents.Add(order.GetContent());
             }
             return orderContents;
         }
