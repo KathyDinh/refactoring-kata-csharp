@@ -58,9 +58,9 @@ namespace RefactoringKata
             }
         }
 
-        public Dictionary<string, string> GetContent()
+        public Dictionary<string, dynamic> GetContent()
         {
-            var content = new Dictionary<string, string>();
+            var content = new Dictionary<string, dynamic>();
             content.Add("code", Code);
             content.Add("color", getColor());
 
@@ -69,7 +69,7 @@ namespace RefactoringKata
                 content.Add("size", getSize());
             }
 
-            content.Add("price", Price.ToString());
+            content.Add("price", Price);
             content.Add("currency", Currency);
             return content;
         }

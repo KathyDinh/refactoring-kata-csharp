@@ -3,8 +3,11 @@ using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace RefactoringKata
 {
@@ -70,23 +73,23 @@ namespace RefactoringKata
 
         private string GetProductContentsFor(Order order)
         {
-            var productContents = new List<string>();
+            var productContents = new List<Dictionary<string, dynamic>>();
             for (var j = 0; j < order.GetProductsCount(); j++)
             {
                 var product = order.GetProduct(j);
-                productContents.Add(GetContentFor(product));
+                productContents.Add(product.GetContent());
             }
 
-            var content = string.Format("[{0}]", string.Join(", ", productContents));
-            return content;
+            var json = GetJson(productContents);
+            return json;
         }
-        private string GetContentFor(Product product)
+
+        private static string GetJson(object content)
         {
-            var content = product.GetContent();
-
-            var productContent = TransformToAJsonObject(content);
-
-            return productContent;
+            var jsonDefault = JsonConvert.SerializeObject(content);
+            var json = jsonDefault.Replace(":", ": ")
+                .Replace(",", ", ");
+            return json;
         }
 
         private static string TransformToAJsonObject(Dictionary<string, string> content)
